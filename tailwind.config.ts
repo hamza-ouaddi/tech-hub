@@ -42,6 +42,7 @@ const config = {
       fontFamily: {
         inter: ["var(--font-inter)"],
         spaceGrotesk: ["var(--font-spaceGrotesk)"],
+        dmSans: ["var(--font-dmSans)"],
       },
       boxShadow: {
         "light-100":
