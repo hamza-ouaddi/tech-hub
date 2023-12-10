@@ -21,6 +21,7 @@ const NavItems = () => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
           pathname === item.route;
+
         return (
           <SheetClose key={item.route} asChild>
             <Link
@@ -82,7 +83,7 @@ const MobileSideBar = () => {
               <SheetClose asChild>
                 <Link href="/sign-up">
                   <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[40px] w-full rounded-lg border px-4 py-3 shadow-none">
-                    <span>Sign Up</span>
+                    Sign Up
                   </Button>
                 </Link>
               </SheetClose>
