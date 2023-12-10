@@ -32,12 +32,12 @@ export const themeModes = [
 
 export const sidebarLinks: SidebarLink[] = [
   {
-    icon: <Home size={22} />,
+    icon: <Home size={24} />,
     route: "/",
     label: "Home",
   },
   {
-    icon: <Users size={22} absoluteStrokeWidth />,
+    icon: <Users size={22} />,
     route: "/community",
     label: "Community",
   },
