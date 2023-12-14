@@ -6,37 +6,37 @@ import Tag from "./Tag";
 const RightSidebar = () => {
   const topQuestions = [
     {
-      _id: 1,
+      _id: "1",
       title: "How does RESTful API differ from GraphQL?",
     },
     {
-      _id: 2,
+      _id: "2",
       title:
         "What is the difference between machine learning and deep learning?",
     },
     {
-      _id: 3,
+      _id: "3",
       title:
         "Explain the difference between front-end and back-end development.",
     },
     {
-      _id: 4,
+      _id: "4",
       title: "The purpose of a firewall in network security.",
     },
     {
-      _id: 5,
+      _id: "5",
       title:
         "Evaluate how continuous integration/continuous deployment (CI/CD) improves software development.",
     },
   ];
 
   const popularTags = [
-    { _id: 1, name: "javascript", questionNum: 10 },
-    { _id: 2, name: "progamming", questionNum: 8 },
-    { _id: 3, name: "database", questionNum: 6 },
-    { _id: 4, name: "webdev", questionNum: 6 },
-    { _id: 5, name: "python", questionNum: 5 },
-    { _id: 6, name: "next.js", questionNum: 4 },
+    { _id: "1", name: "javascript", questionNum: 10 },
+    { _id: "2", name: "progamming", questionNum: 8 },
+    { _id: "3", name: "database", questionNum: 6 },
+    { _id: "4", name: "webdev", questionNum: 6 },
+    { _id: "5", name: "python", questionNum: 5 },
+    { _id: "6", name: "next.js", questionNum: 4 },
   ];
 
   return (
