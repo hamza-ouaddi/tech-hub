@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { QuestionsSchema } from "@/lib/validations";
+import { XCircle } from "lucide-react";
+import { Badge } from "../ui/badge";
 
 const Question = () => {
   const editorRef = useRef(null);
@@ -63,6 +65,12 @@ const Question = () => {
         form.trigger();
       }
     }
+  };
+
+  const handleTagDelete = (tag: string, field: any) => {
+    const newTags = field.value.filter((e: string) => e !== tag);
+
+    form.setValue("tags", newTags);
   };
   return (
     <Form {...form}>
@@ -155,10 +163,30 @@ const Question = () => {
                 Tags<span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
-                <Input
-                  className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
-                  onKeyDown={(e) => handleInputKeyDown(e, field)}
-                />
+                <>
+                  <Input
+                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                    onKeyDown={(e) => handleInputKeyDown(e, field)}
+                  />
+
+                  {field.value.length > 0 && (
+                    <div className="flex-start mt-2.5 gap-2.5">
+                      {field.value.map((tag: any) => (
+                        <Badge
+                          key={tag}
+                          onClick={() => handleTagDelete(tag, field)}
+                          className=" background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none p-2 capitalize"
+                        >
+                          {tag}{" "}
+                          <XCircle
+                            size={12}
+                            className="text-dark400_light800 cursor-pointer object-contain"
+                          />
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                </>
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Add tags to categorize your question or discussion - Maximum 3
