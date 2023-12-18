@@ -20,8 +20,15 @@ import { QuestionsSchema } from "@/lib/validations";
 import { XCircle } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { createQuestion } from "@/lib/actions/question.action";
+import { usePathname, useRouter } from "next/navigation";
 
-const Question = () => {
+interface Props {
+  getUserId: string;
+}
+
+const Question = ({ getUserId }: Props) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const type: any = "create";
@@ -39,9 +46,19 @@ const Question = () => {
     setIsSubmitting(true);
 
     try {
-      await createQuestion({});
-    } catch (error) {}
-    console.log(values);
+      await createQuestion({
+        title: values.title,
+        description: values.description,
+        tags: values.tags,
+        author: JSON.parse(getUserId),
+      });
+
+      router.push("/");
+    } catch (error) {
+      console.log(values);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const handleInputKeyDown = (
