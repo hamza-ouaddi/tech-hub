@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { QuestionsSchema } from "@/lib/validations";
 import { XCircle } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { createQuestion } from "@/lib/actions/question.action";
 
 const Question = () => {
   const editorRef = useRef(null);
@@ -34,8 +35,12 @@ const Question = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
+
+    try {
+      await createQuestion({});
+    } catch (error) {}
     console.log(values);
   }
 
@@ -116,6 +121,8 @@ const Question = () => {
                     editorRef.current = editor;
                   }}
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
