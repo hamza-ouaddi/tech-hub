@@ -51,6 +51,7 @@ const Question = ({ getUserId }: Props) => {
         description: values.description,
         tags: values.tags,
         author: JSON.parse(getUserId),
+        path: pathname,
       });
 
       router.push("/");
