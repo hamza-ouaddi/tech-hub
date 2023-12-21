@@ -27,9 +27,9 @@ export async function getUserById(params: any) {
   try {
     databaseConnection();
 
-    // const { userId } = params;
+    const { userId } = params;
 
-    const userId = 54321;
+    // const userId = 54321;
 
     const user = await User.findOne({ clerkId: userId });
 
@@ -71,6 +71,7 @@ export async function deleteUser(params: DeleteUserParams) {
 
     // Questions
     /// To get questions
+
     // const userQuestionIds = await Question.find({ author: user._id }).distinct(
     //   "_id"
     // );
