@@ -69,6 +69,9 @@ const QuestionCard = ({
           value={formatNumber(upvotes)}
           title="Votes"
           textStyles="small-medium text-dark400_light800"
+          imgUrl={""}
+          alt={""}
+          isAuthor={false}
         />
 
         <Metric
@@ -76,6 +79,9 @@ const QuestionCard = ({
           value={formatNumber(answers.length)}
           title="Answers"
           textStyles="small-medium text-dark400_light800"
+          imgUrl={""}
+          alt={""}
+          isAuthor={false}
         />
 
         <Metric
@@ -83,6 +89,9 @@ const QuestionCard = ({
           value={formatNumber(views)}
           title="Views"
           textStyles="small-medium text-dark400_light800"
+          imgUrl={""}
+          alt={""}
+          isAuthor={false}
         />
       </div>
     </div>
