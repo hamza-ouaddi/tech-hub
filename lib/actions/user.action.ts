@@ -5,6 +5,7 @@ import { databaseConnection } from "../mongoose";
 import {
   CreateUserParams,
   DeleteUserParams,
+  GetAllUsersParams,
   UpdateUserParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
@@ -28,8 +29,6 @@ export async function getUserById(params: any) {
     databaseConnection();
 
     const { userId } = params;
-
-    // const userId = 54321;
 
     const user = await User.findOne({ clerkId: userId });
 
@@ -82,6 +81,21 @@ export async function deleteUser(params: DeleteUserParams) {
     const deletedUser = await User.findByIdAndDelete(user._id);
 
     return deletedUser;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllUsers(params: GetAllUsersParams) {
+  try {
+    databaseConnection();
+
+    // const { page = 1, pageSize = 10, filter, searchQuery } = params;
+
+    const users = await User.find({}).sort({ createdAt: -1 });
+
+    return { users };
   } catch (error) {
     console.log(error);
     throw error;
