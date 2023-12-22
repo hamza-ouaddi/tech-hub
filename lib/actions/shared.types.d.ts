@@ -19,6 +19,13 @@ export interface DeleteUserParams {
   clerkId: string;
 }
 
+export interface GetAllUsersParams {
+  page?: number;
+  pageSize?: number;
+  filter?: string;
+  searchQuery?: string;
+}
+
 export interface CreateQuestionParams {
   title: string;
   description: string;
@@ -31,4 +38,9 @@ export interface GetQuestionsParams {
   pageSize?: number;
   searchQuery?: string;
   filter?: string;
+}
+
+export interface GetTopTagsParams {
+  userId: string;
+  limit?: number;
 }
