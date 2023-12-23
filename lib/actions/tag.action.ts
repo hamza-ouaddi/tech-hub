@@ -2,8 +2,9 @@
 
 import User from "@/database/user.model";
 import { databaseConnection } from "../mongoose";
-import { GetTopTagsParams } from "./shared.types";
+import { GetAllTagsParams, GetTopTagsParams } from "./shared.types";
 import { Error } from "mongoose";
+import Tag from "@/database/tag.model";
 
 export async function getTopTags(params: GetTopTagsParams) {
   try {
@@ -24,6 +25,18 @@ export async function getTopTags(params: GetTopTagsParams) {
       { _id: "2", name: "React" },
       { _id: "3", name: "UI/UX" },
     ];
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllTags(params: GetAllTagsParams) {
+  try {
+    databaseConnection();
+    const tags = await Tag.find({});
+
+    return { tags };
   } catch (error) {
     console.log(error);
     throw error;
