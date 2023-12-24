@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Inter, Space_Grotesk, DM_Sans } from "next/font/google";
 import type { Metadata } from "next/types";
 import "./globals.css";
+import "../styles/prism.css";
 import { ThemeProvider } from "@/context/ThemeProvider";
 
 const inter = Inter({

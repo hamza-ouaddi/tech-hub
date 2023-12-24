@@ -1,4 +1,6 @@
+import HTMLParser from "@/components/shared/HTMLParser";
 import { Metric } from "@/components/shared/Metric";
+import Tag from "@/components/shared/Tag";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getDateFormat, formatNumber } from "@/lib/utils";
 import { MessageCircle, Eye, Clock } from "lucide-react";
@@ -6,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+// @ts-ignore
 const Page = async ({ params }) => {
   const question = await getQuestionById({ questionId: params.id });
   return (
@@ -63,7 +66,13 @@ const Page = async ({ params }) => {
           isAuthor={false}
         />
       </div>
-      <div>Content of The Question</div>
+      <HTMLParser data={question.description} />
+
+      <div className="mt-8 flex flex-wrap gap-2">
+        {question.tags.map((tag: any) => (
+          <Tag key={tag._id} _id={tag._id} name={tag.name} />
+        ))}
+      </div>
     </>
   );
 };
