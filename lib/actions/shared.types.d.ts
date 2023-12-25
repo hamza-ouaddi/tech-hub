@@ -44,6 +44,13 @@ export interface GetQuestionByIdParams {
   questionId: string;
 }
 
+export interface CreateAnswerParams {
+  description: string;
+  author: string;
+  question: string;
+  path: string;
+}
+
 export interface GetTopTagsParams {
   userId: string;
   limit?: number;
