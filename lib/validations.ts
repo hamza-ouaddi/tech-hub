@@ -18,3 +18,8 @@ export const QuestionsSchema = z.object({
     .min(1, { message: "You must add at least 1 tag." })
     .max(3, { message: "Maximum 3 tags." }),
 });
+
+
+export const AnswerSchema = z.object({
+  answer: z.string().min(16, {message: 'Answer must be at least 16 characters.'})
+})

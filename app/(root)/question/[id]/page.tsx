@@ -1,8 +1,11 @@
+import Answer from "@/components/forms/Answer";
 import HTMLParser from "@/components/shared/HTMLParser";
 import { Metric } from "@/components/shared/Metric";
 import Tag from "@/components/shared/Tag";
 import { getQuestionById } from "@/lib/actions/question.action";
+import { getUserById } from "@/lib/actions/user.action";
 import { getDateFormat, formatNumber } from "@/lib/utils";
+import { auth } from "@clerk/nextjs";
 import { MessageCircle, Eye, Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +14,13 @@ import React from "react";
 // @ts-ignore
 const Page = async ({ params }) => {
   const question = await getQuestionById({ questionId: params.id });
+  const { userId: clerkId } = auth();
+
+  let getUser;
+
+  if (clerkId) {
+    getUser = await getUserById({ userId: clerkId });
+  }
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -73,6 +83,12 @@ const Page = async ({ params }) => {
           <Tag key={tag._id} _id={tag._id} name={tag.name} />
         ))}
       </div>
+
+      <Answer
+        questionDescription={question.description}
+        questionId={JSON.stringify(question._id)}
+        authorId={JSON.stringify(getUser._id)}
+      />
     </>
   );
 };
