@@ -1,4 +1,5 @@
 import Answer from "@/components/forms/Answer";
+import AllAnswers from "@/components/shared/AllAnswers";
 import HTMLParser from "@/components/shared/HTMLParser";
 import { Metric } from "@/components/shared/Metric";
 import Tag from "@/components/shared/Tag";
@@ -83,6 +84,12 @@ const Page = async ({ params }) => {
           <Tag key={tag._id} _id={tag._id} name={tag.name} />
         ))}
       </div>
+
+      <AllAnswers
+        questionId={question._id}
+        userId={JSON.stringify(getUser._id)}
+        totalAnswers={question.answers.length}
+      />
 
       <Answer
         questionDescription={question.description}

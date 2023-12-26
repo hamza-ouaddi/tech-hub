@@ -51,6 +51,13 @@ export interface CreateAnswerParams {
   path: string;
 }
 
+export interface GetAnswersParams {
+  questionId: string;
+  sortBy?: string;
+  page?: string;
+  pageSize?: string;
+}
+
 export interface GetTopTagsParams {
   userId: string;
   limit?: number;
