@@ -6,6 +6,7 @@ import {
   CreateUserParams,
   DeleteUserParams,
   GetAllUsersParams,
+  SaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
@@ -96,6 +97,37 @@ export async function getAllUsers(params: GetAllUsersParams) {
     const users = await User.find({}).sort({ createdAt: -1 });
 
     return { users };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function saveQuestion(params: SaveQuestionParams) {
+  try {
+    databaseConnection();
+
+    const { userId, questionId, path } = params;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const isQuestionSaved = user.saved.includes(questionId);
+
+    let updateSaved = {};
+
+    if (isQuestionSaved) {
+      updateSaved = { $pull: { saved: questionId } };
+    } else {
+      updateSaved = { $addToSet: { saved: questionId } };
+    }
+
+    await User.findByIdAndUpdate(userId, updateSaved, { new: true });
+
+    revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;

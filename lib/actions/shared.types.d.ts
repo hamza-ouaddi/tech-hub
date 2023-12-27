@@ -26,6 +26,12 @@ export interface GetAllUsersParams {
   searchQuery?: string;
 }
 
+export interface SaveQuestionParams {
+  userId: string;
+  questionId: string;
+  path: string;
+}
+
 export interface CreateQuestionParams {
   title: string;
   description: string;
