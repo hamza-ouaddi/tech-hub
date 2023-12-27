@@ -7,6 +7,7 @@ import {
   CreateQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
+  QuestionVoteParams,
 } from "./shared.types";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
@@ -86,6 +87,73 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
       });
 
     return question;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function upvoteQuestion(params: QuestionVoteParams) {
+  try {
+    databaseConnection();
+
+    const { questionId, userId, hasUpvoted, hasDownvoted, path } = params;
+
+    let updateVote = {};
+
+    if (hasUpvoted) {
+      updateVote = { $pull: { upvotes: userId } };
+    } else if (hasDownvoted) {
+      updateVote = {
+        $pull: { downvotes: userId },
+        $push: { upvotes: userId },
+      };
+    } else {
+      updateVote = { $addToSet: { upvotes: userId } };
+    }
+
+    const question = await Question.findByIdAndUpdate(questionId, updateVote, {
+      new: true,
+    });
+
+    if (!question) {
+      throw new Error("Question not found");
+    }
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function downvoteQuestion(params: QuestionVoteParams) {
+  try {
+    databaseConnection();
+    const { questionId, userId, hasUpvoted, hasDownvoted, path } = params;
+
+    let updateVote = {};
+
+    if (hasDownvoted) {
+      updateVote = { $pull: { downvotes: userId } };
+    } else if (hasUpvoted) {
+      updateVote = {
+        $pull: { upvotes: userId },
+        $push: { downvotes: userId },
+      };
+    } else {
+      updateVote = { $addToSet: { downvotes: userId } };
+    }
+
+    const question = await Question.findByIdAndUpdate(questionId, updateVote, {
+      new: true,
+    });
+
+    if (!question) {
+      throw new Error("Question not found");
+    }
+
+    revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
