@@ -3,6 +3,7 @@ import AllAnswers from "@/components/shared/AllAnswers";
 import HTMLParser from "@/components/shared/HTMLParser";
 import { Metric } from "@/components/shared/Metric";
 import Tag from "@/components/shared/Tag";
+import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { getDateFormat, formatNumber } from "@/lib/utils";
@@ -41,6 +42,16 @@ const Page = async ({ params }) => {
               {question.author.name}
             </p>
           </Link>
+          <Votes
+            type="question"
+            typeId={JSON.stringify(question._id)}
+            userId={JSON.stringify(getUser._id)}
+            upvotes={question.upvotes.length}
+            hasUpvoted={question.upvotes.includes(getUser._id)}
+            downvotes={question.downvotes.length}
+            hasDownvoted={question.downvotes.includes(getUser._id)}
+            hasSaved={getUser?.saved.includes(question._id)}
+          />
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
           {question.title}
@@ -87,7 +98,7 @@ const Page = async ({ params }) => {
 
       <AllAnswers
         questionId={question._id}
-        userId={JSON.stringify(getUser._id)}
+        userId={getUser._id}
         totalAnswers={question.answers.length}
       />
 

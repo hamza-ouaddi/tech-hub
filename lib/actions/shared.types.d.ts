@@ -44,6 +44,14 @@ export interface GetQuestionByIdParams {
   questionId: string;
 }
 
+export interface QuestionVoteParams {
+  questionId: string;
+  userId: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+  path: string;
+}
+
 export interface CreateAnswerParams {
   description: string;
   author: string;
@@ -56,6 +64,14 @@ export interface GetAnswersParams {
   sortBy?: string;
   page?: string;
   pageSize?: string;
+}
+
+export interface AnswerVoteParams {
+  answerId: string;
+  userId: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+  path: string;
 }
 
 export interface GetTopTagsParams {
