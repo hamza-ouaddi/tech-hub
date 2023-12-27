@@ -4,6 +4,7 @@ import {
   downvoteQuestion,
   upvoteQuestion,
 } from "@/lib/actions/question.action";
+import { saveQuestion } from "@/lib/actions/user.action";
 import { formatNumber } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -39,6 +40,7 @@ const Votes = ({
 }: Props) => {
   const pathname = usePathname();
 
+  // Vote function
   const handleVote = async (action: string) => {
     if (!userId) {
       return;
@@ -83,6 +85,15 @@ const Votes = ({
         });
       }
     }
+  };
+
+  // Save function
+  const handleSave = async () => {
+    await saveQuestion({
+      userId: JSON.parse(userId),
+      questionId: JSON.parse(typeId),
+      path: pathname,
+    });
   };
 
   return (
@@ -136,11 +147,13 @@ const Votes = ({
           <PiBookmarkSimpleFill
             size={20}
             className="cursor-pointer text-primary-500"
+            onClick={() => handleSave()}
           />
         ) : (
           <PiBookmarkSimpleBold
             size={20}
             className="cursor-pointer text-primary-500"
+            onClick={() => handleSave()}
           />
         ))}
     </div>
