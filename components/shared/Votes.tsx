@@ -1,13 +1,14 @@
 "use client";
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
+import { countQuestionViews } from "@/lib/actions/interaction.action";
 import {
   downvoteQuestion,
   upvoteQuestion,
 } from "@/lib/actions/question.action";
 import { saveQuestion } from "@/lib/actions/user.action";
 import { formatNumber } from "@/lib/utils";
-import { usePathname } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import {
   PiArrowFatDownFill,
   PiArrowFatUpFill,
@@ -39,6 +40,7 @@ const Votes = ({
   hasSaved,
 }: Props) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   // Vote function
   const handleVote = async (action: string) => {
@@ -95,6 +97,14 @@ const Votes = ({
       path: pathname,
     });
   };
+
+  // To count views
+  useEffect(() => {
+    countQuestionViews({
+      questionId: JSON.parse(typeId),
+      userId: userId ? JSON.parse(userId) : undefined,
+    });
+  }, [typeId, userId, pathname, router]);
 
   return (
     <div className="flex gap-5">
