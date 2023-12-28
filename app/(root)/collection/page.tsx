@@ -2,11 +2,9 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 import LocalSearchBar from "@/components/shared/searchbar/LocalSearchBar";
-import { Button } from "@/components/ui/button";
 import { QuestionFilters } from "@/constants/filter";
 import { getSavedQuestions } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
-import Link from "next/link";
 import React from "react";
 
 export default async function Home() {
@@ -36,7 +34,7 @@ export default async function Home() {
       </div>
       <div className="mt-10 flex w-full flex-col gap-6">
         {savedQuestions.questions.length > 0 ? (
-          savedQuestions.questions.map((question) => (
+          savedQuestions.questions.map((question: any) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
