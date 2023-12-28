@@ -99,3 +99,8 @@ export interface GetAllTagsParams {
   filter?: string;
   searchQuery?: string;
 }
+
+export interface countQuestionViewsParams {
+  questionId: string;
+  userId: string | undefined;
+}
