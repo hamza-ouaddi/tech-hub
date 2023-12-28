@@ -32,6 +32,14 @@ export interface SaveQuestionParams {
   path: string;
 }
 
+export interface GetSavedQuestionsParams {
+  clerkId: string;
+  page?: number;
+  pageSize?: number;
+  filter?: string;
+  searchQuery?: string;
+}
+
 export interface CreateQuestionParams {
   title: string;
   description: string;
