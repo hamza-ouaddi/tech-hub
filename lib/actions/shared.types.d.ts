@@ -58,6 +58,13 @@ export interface GetQuestionByIdParams {
   questionId: string;
 }
 
+export interface GetQuestionByTagIdParams {
+  tagId: string;
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
+}
+
 export interface QuestionVoteParams {
   questionId: string;
   userId: string;
