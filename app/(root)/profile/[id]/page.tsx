@@ -9,6 +9,7 @@ import React from "react";
 import { formatDateToMonthYear } from "@/lib/utils";
 import ProfileAttribute from "@/components/shared/ProfileAttribute";
 import { CalendarDays, Link2, MapPin } from "lucide-react";
+import Stats from "@/components/shared/Stats";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
@@ -86,6 +87,10 @@ const Page = async ({ params, searchParams }: URLProps) => {
           </SignedIn>
         </div>
       </div>
+      <Stats
+        totalQuestions={userInfo.totalQuestions}
+        totalAnswers={userInfo.totalAnswers}
+      />
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="w-full">
           <TabsList className="background-light800_dark400 min-h-[42px] p-1">
