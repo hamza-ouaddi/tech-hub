@@ -45,3 +45,11 @@ export const formatNumber = (num: number): string => {
   }
   return (num / 1000000000).toFixed(1) + "B";
 };
+
+export const formatDateToMonthYear = (date: Date): string => {
+  const options: Intl.DateTimeFormatOptions = {
+    month: "long",
+    year: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options);
+};
