@@ -8,6 +8,7 @@ import {
   GetAllUsersParams,
   GetSavedQuestionsParams,
   GetUserByIdParams,
+  GetUserStatsParams,
   SaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
@@ -123,6 +124,53 @@ export async function getUserInfo(params: GetUserByIdParams) {
     const totalAnswers = await Answer.countDocuments({ author: user._id });
 
     return { user, totalQuestions, totalAnswers };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserQuestions(params: GetUserStatsParams) {
+  try {
+    databaseConnection();
+    // eslint-disable-next-line no-unused-vars
+    const { userId, page = 1, pageSize = 10 } = params;
+
+    const userQuestions = await Question.find({ author: userId })
+      .sort({
+        views: 1,
+        upvotes: -1,
+      })
+      .populate("tags", "_id name")
+      .populate("author", "_id clerkId name picture");
+
+    const totalQuestions = await Question.countDocuments({
+      author: userId,
+    });
+
+    return { totalQuestions, userQuestions };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserAnswers(params: GetUserStatsParams) {
+  try {
+    databaseConnection();
+    // eslint-disable-next-line no-unused-vars
+    const { userId, page = 1, pageSize = 10 } = params;
+
+    const userAnswers = await Answer.find({ author: userId })
+      .sort({
+        upvotex: -1,
+      })
+      .populate("question", "_id title")
+      .populate("author", "_id clerkId name picture");
+
+    const totalAnswers = await Answer.countDocuments({ author: userId });
+
+    return { totalAnswers, userAnswers };
   } catch (error) {
     console.log(error);
     throw error;

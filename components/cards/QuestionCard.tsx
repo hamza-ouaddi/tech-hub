@@ -5,8 +5,9 @@ import { Metric } from "../shared/Metric";
 import { Eye, MessageCircle, ThumbsUp } from "lucide-react";
 import { formatNumber, getDateFormat } from "@/lib/utils";
 
-interface questionProps {
+interface QuestionProps {
   _id: string;
+  clerkId?: string | null;
   title: string;
   tags: {
     _id: string;
@@ -25,6 +26,7 @@ interface questionProps {
 
 const QuestionCard = ({
   _id,
+  clerkId,
   title,
   tags,
   author,
@@ -32,7 +34,7 @@ const QuestionCard = ({
   views,
   answers,
   createdAt,
-}: questionProps) => {
+}: QuestionProps) => {
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
