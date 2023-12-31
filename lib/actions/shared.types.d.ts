@@ -30,6 +30,12 @@ export interface GetUserByIdParams {
   userId: string;
 }
 
+export interface GetUserStatsParams {
+  userId: string;
+  page?: number;
+  pageSize?: number;
+}
+
 export interface SaveQuestionParams {
   userId: string;
   questionId: string;

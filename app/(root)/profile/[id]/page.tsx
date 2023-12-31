@@ -10,6 +10,8 @@ import { formatDateToMonthYear } from "@/lib/utils";
 import ProfileAttribute from "@/components/shared/ProfileAttribute";
 import { CalendarDays, Link2, MapPin } from "lucide-react";
 import Stats from "@/components/shared/Stats";
+import TopPostsTab from "@/components/shared/TopPostsTab";
+import AnswersTab from "@/components/shared/AnswersTab";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
@@ -98,11 +100,23 @@ const Page = async ({ params, searchParams }: URLProps) => {
               Top Posts
             </TabsTrigger>
             <TabsTrigger value="answers" className="tab">
-              Answers
+              Top Answers
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="top-posts">Top Posts</TabsContent>
-          <TabsContent value="answers">Answers</TabsContent>
+          <TabsContent value="top-posts">
+            <TopPostsTab
+              searchParams={searchParams}
+              userId={userInfo.user._id}
+              clerkId={clerkId}
+            />
+          </TabsContent>
+          <TabsContent value="answers" className="flex w-full flex-col gap-6">
+            <AnswersTab
+              searchParams={searchParams}
+              userId={userInfo.user._id}
+              clerkId={clerkId}
+            />
+          </TabsContent>
         </Tabs>
       </div>
     </>
