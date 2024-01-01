@@ -19,26 +19,31 @@ import { Input } from "@/components/ui/input";
 import { QuestionsSchema } from "@/lib/validations";
 import { XCircle } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { createQuestion } from "@/lib/actions/question.action";
+import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
+  type?: string;
   getUserId: string;
+  questionDetails?: string;
 }
 
-const Question = ({ getUserId }: Props) => {
+const Question = ({ type, getUserId, questionDetails }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const type: any = "create";
+
+  // To get the question details in edit mode
+  const getQuestionDetails = JSON.parse(questionDetails || "");
+  const getTags = getQuestionDetails.tags.map((tag: any) => tag.name);
 
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      tags: [],
+      title: getQuestionDetails.title || "",
+      description: getQuestionDetails.description || "",
+      tags: getTags || [],
     },
   });
 
@@ -46,15 +51,24 @@ const Question = ({ getUserId }: Props) => {
     setIsSubmitting(true);
 
     try {
-      await createQuestion({
-        title: values.title,
-        description: values.description,
-        tags: values.tags,
-        author: JSON.parse(getUserId),
-        path: pathname,
-      });
-
-      router.push("/");
+      if (type === "edit") {
+        await editQuestion({
+          questionId: getQuestionDetails._id,
+          title: values.title,
+          description: values.description,
+          path: pathname,
+        });
+        router.push(`/question/${getQuestionDetails._id}`);
+      } else {
+        await createQuestion({
+          title: values.title,
+          description: values.description,
+          tags: values.tags,
+          author: JSON.parse(getUserId),
+          path: pathname,
+        });
+        router.push("/");
+      }
     } catch (error) {
       console.log(values);
     } finally {
@@ -141,7 +155,7 @@ const Question = ({ getUserId }: Props) => {
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue=""
+                  initialValue={getQuestionDetails.description || ""}
                   init={{
                     height: 350,
                     menubar: false,
@@ -192,6 +206,7 @@ const Question = ({ getUserId }: Props) => {
                   <Input
                     className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
+                    disabled={type === "edit"}
                   />
 
                   {field.value.length > 0 && (
@@ -199,14 +214,20 @@ const Question = ({ getUserId }: Props) => {
                       {field.value.map((tag: any) => (
                         <Badge
                           key={tag}
-                          onClick={() => handleTagDelete(tag, field)}
+                          onClick={() =>
+                            type !== "edit"
+                              ? handleTagDelete(tag, field)
+                              : () => {}
+                          }
                           className=" background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none p-2 capitalize"
                         >
                           {tag}{" "}
-                          <XCircle
-                            size={12}
-                            className="text-dark400_light800 cursor-pointer object-contain"
-                          />
+                          {type !== "edit" && (
+                            <XCircle
+                              size={12}
+                              className="text-dark400_light800 cursor-pointer object-contain"
+                            />
+                          )}
                         </Badge>
                       ))}
                     </div>
@@ -229,7 +250,7 @@ const Question = ({ getUserId }: Props) => {
           {isSubmitting ? (
             <>{type === "edit" ? "Editing..." : "Posting..."}</>
           ) : (
-            <>{type === "Edit" ? "Edit Question" : "Ask a Question"}</>
+            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
           )}
         </Button>
       </form>

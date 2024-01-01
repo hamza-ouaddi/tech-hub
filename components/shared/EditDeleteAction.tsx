@@ -2,7 +2,7 @@
 import { deleteAnswer } from "@/lib/actions/answer.action";
 import { deleteQuestion } from "@/lib/actions/question.action";
 import { PenSquare, Trash } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 interface Props {
@@ -12,6 +12,11 @@ interface Props {
 
 const EditDeleteAction = ({ type, itemId }: Props) => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleEdit = async () => {
+    router.push(`/question/edit/${JSON.parse(itemId)}`);
+  };
 
   const handleDelete = async () => {
     if (type === "question") {
@@ -33,6 +38,7 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
           width={16}
           height={16}
           className="cursor-pointer text-accent-blue"
+          onClick={handleEdit}
         />
       )}
       <Trash
