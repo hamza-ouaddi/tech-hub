@@ -83,6 +83,13 @@ export interface QuestionVoteParams {
   path: string;
 }
 
+export interface EditQuestionParams {
+  questionId: string;
+  title: string;
+  description: string;
+  path: string;
+}
+
 export interface DeleteQuestionParams {
   questionId: string;
   path: string;
