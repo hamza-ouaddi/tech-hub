@@ -83,6 +83,11 @@ export interface QuestionVoteParams {
   path: string;
 }
 
+export interface DeleteQuestionParams {
+  questionId: string;
+  path: string;
+}
+
 export interface CreateAnswerParams {
   description: string;
   author: string;
@@ -102,6 +107,11 @@ export interface AnswerVoteParams {
   userId: string;
   hasUpvoted: boolean;
   hasDownvoted: boolean;
+  path: string;
+}
+
+export interface DeleteAnswerParams {
+  answerId: string;
   path: string;
 }
 
