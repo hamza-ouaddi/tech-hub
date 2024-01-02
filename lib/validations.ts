@@ -19,7 +19,28 @@ export const QuestionsSchema = z.object({
     .max(3, { message: "Maximum 3 tags." }),
 });
 
-
 export const AnswerSchema = z.object({
-  answer: z.string().min(16, {message: 'Answer must be at least 16 characters.'})
-})
+  answer: z
+    .string()
+    .min(16, { message: "Answer must be at least 16 characters." }),
+});
+
+export const ProfileSchema = z.object({
+  name: z
+    .string()
+    .min(5, { message: "Name must be at least 5 characters." })
+    .max(50, { message: "Name must not have more than 50 characters." }),
+  username: z
+    .string()
+    .min(5, { message: "Username must be at least 5 characters." })
+    .max(50, { message: "Username must not have more than 50 characters." }),
+  personalWebsite: z.string().url(),
+  location: z
+    .string()
+    .min(5, { message: "Location must be at least 5 characters." })
+    .max(50, { message: "Location must not have more than 50 characters." }),
+  bio: z
+    .string()
+    .min(10, "Bio must be at least 10 characters.")
+    .max(150, { message: "Bio must not have more than 150 characters." }),
+});
