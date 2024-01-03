@@ -35,14 +35,15 @@ const Question = ({ type, getUserId, questionDetails }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // To get the question details in edit mode
-  const getQuestionDetails = JSON.parse(questionDetails || "");
-  const getTags = getQuestionDetails.tags.map((tag: any) => tag.name);
+  const getQuestionDetails =
+    questionDetails && JSON.parse(questionDetails || "");
+  const getTags = getQuestionDetails?.tags.map((tag: any) => tag.name);
 
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
-      title: getQuestionDetails.title || "",
-      description: getQuestionDetails.description || "",
+      title: getQuestionDetails?.title || "",
+      description: getQuestionDetails?.description || "",
       tags: getTags || [],
     },
   });
@@ -155,7 +156,7 @@ const Question = ({ type, getUserId, questionDetails }: Props) => {
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue={getQuestionDetails.description || ""}
+                  initialValue={getQuestionDetails?.description || ""}
                   init={{
                     height: 350,
                     menubar: false,
