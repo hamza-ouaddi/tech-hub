@@ -98,9 +98,18 @@ export async function getAllUsers(params: GetAllUsersParams) {
   try {
     databaseConnection();
 
-    // const { page = 1, pageSize = 10, filter, searchQuery } = params;
+    const { searchQuery } = params;
 
-    const users = await User.find({}).sort({ createdAt: -1 });
+    const query: FilterQuery<typeof User> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { name: { $regex: new RegExp(searchQuery, "i") } },
+        { username: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    const users = await User.find(query).sort({ createdAt: -1 });
 
     return { users };
   } catch (error) {
@@ -212,8 +221,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     databaseConnection();
 
-    // eslint-disable-next-line no-unused-vars
-    const { clerkId, page = 1, pageSize = 10, filter, searchQuery } = params;
+    const { clerkId, searchQuery } = params;
 
     const query: FilterQuery<typeof Question> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
