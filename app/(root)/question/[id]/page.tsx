@@ -14,7 +14,7 @@ import Link from "next/link";
 import React from "react";
 
 // @ts-ignore
-const Page = async ({ params }) => {
+const Page = async ({ params, searchParams }) => {
   const question = await getQuestionById({ questionId: params.id });
   const { userId: clerkId } = auth();
 
@@ -100,6 +100,7 @@ const Page = async ({ params }) => {
         questionId={question._id}
         userId={getUser._id}
         totalAnswers={question.answers.length}
+        filter={searchParams?.filter}
       />
 
       <Answer
