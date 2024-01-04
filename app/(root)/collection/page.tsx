@@ -4,23 +4,27 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearchBar from "@/components/shared/searchbar/LocalSearchBar";
 import { QuestionFilters } from "@/constants/filter";
 import { getSavedQuestions } from "@/lib/actions/user.action";
+import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import React from "react";
 
-export default async function Home() {
+export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
 
   if (!userId) {
     return null;
   }
-  const savedQuestions = await getSavedQuestions({ clerkId: userId });
+  const savedQuestions = await getSavedQuestions({
+    clerkId: userId,
+    searchQuery: searchParams.q,
+  });
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">Saved Questions</h1>
 
       <div className="mt-8 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchBar
-          route="/"
+          route="/collection"
           iconPosition="left"
           placeholder="Search for questions..."
           additionalClasses="flex-1"
