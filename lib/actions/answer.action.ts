@@ -39,11 +39,28 @@ export async function getAnswers(params: GetAnswersParams) {
   try {
     databaseConnection();
 
-    const { questionId } = params;
+    const { questionId, sortBy } = params;
+
+    let sortFilterOption = {};
+
+    switch (sortBy) {
+      case "highestUpvotes":
+        sortFilterOption = { upvotes: -1 };
+        break;
+      case "lowestUpvotes":
+        sortFilterOption = { downvotes: -1 };
+        break;
+      case "recent":
+        sortFilterOption = { createdAt: -1 };
+        break;
+      case "old":
+        sortFilterOption = { createdAt: 1 };
+        break;
+    }
 
     const answers = await Answer.find({ question: questionId })
       .populate("author", "_id clerkId name picture")
-      .sort({ createdAt: -1 });
+      .sort(sortFilterOption);
 
     return { answers };
   } catch (error) {
