@@ -53,7 +53,10 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     databaseConnection();
 
-    const { searchQuery, filter } = params;
+    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
+
+    // To Skip the number of questions while paginating
+    const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof Question> = {};
 
@@ -92,9 +95,15 @@ export async function getQuestions(params: GetQuestionsParams) {
         path: "author",
         model: User,
       })
+      .skip(skipAmount)
+      .limit(pageSize)
       .sort(sortFilterOption);
 
-    return { questions };
+    // To Check if there is still next page in pagination
+    const totalQuestions = await Question.countDocuments(query);
+    const isNext = totalQuestions > skipAmount + questions.length;
+
+    return { questions, isNext };
   } catch (error) {
     console.log(error);
     throw error;

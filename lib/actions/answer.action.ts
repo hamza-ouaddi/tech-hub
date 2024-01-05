@@ -39,7 +39,10 @@ export async function getAnswers(params: GetAnswersParams) {
   try {
     databaseConnection();
 
-    const { questionId, sortBy } = params;
+    const { questionId, sortBy, page = 1, pageSize = 10 } = params;
+
+    // To Skip the number of items while paginating
+    const skipAmount = (page - 1) * pageSize;
 
     let sortFilterOption = {};
 
@@ -60,9 +63,15 @@ export async function getAnswers(params: GetAnswersParams) {
 
     const answers = await Answer.find({ question: questionId })
       .populate("author", "_id clerkId name picture")
-      .sort(sortFilterOption);
+      .sort(sortFilterOption)
+      .skip(skipAmount)
+      .limit(pageSize);
 
-    return { answers };
+    // To Check if there is still next page in pagination
+    const totalAnswers = await Answer.countDocuments({ question: questionId });
+    const isNext = totalAnswers > skipAmount + answers.length;
+
+    return { answers, isNext };
   } catch (error) {
     console.log(error);
     throw error;
