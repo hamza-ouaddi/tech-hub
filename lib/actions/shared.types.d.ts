@@ -138,3 +138,8 @@ export interface countQuestionViewsParams {
   questionId: string;
   userId: string | undefined;
 }
+
+export interface SearchParams {
+  query?: string | null;
+  type?: string | null;
+}
