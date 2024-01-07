@@ -13,10 +13,10 @@ const SearchBar = () => {
 
   const query = searchParams.get("q");
 
-  const [search, setSearch] = useState(query || "");
-  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState<string>(query || "");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const searchContainerRef = useRef(null);
+  const searchContainerRef = useRef<HTMLDivElement | null>(null);
 
   // To close search result container after search or out click
   useEffect(() => {
