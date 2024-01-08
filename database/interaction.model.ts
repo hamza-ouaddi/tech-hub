@@ -9,7 +9,7 @@ export interface IInteraction extends Document {
   createdAt: Date;
 }
 
-const interactionSchema = new Schema({
+const InteractionSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   action: { type: String, required: true },
   question: { type: Schema.Types.ObjectId, ref: "Question" },
@@ -18,7 +18,7 @@ const interactionSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const Intercation =
-  models.Intercation || model("Intercation", interactionSchema);
+const Interaction =
+  models.Interaction || model("Interaction", InteractionSchema);
 
-export default Intercation;
+export default Interaction;
