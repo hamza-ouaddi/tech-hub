@@ -220,12 +220,12 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
       throw new Error("Question not found");
     }
 
-    // increment user's reputation by +1 for upvoting
+    // increment user's reputation by +1 for downvoting
     await User.findByIdAndUpdate(userId, {
       $inc: { reputation: hasDownvoted ? -1 : 1 },
     });
 
-    // increment user's reputation by +10 for recieving upvotes
+    // increment user's reputation by +10 for recieving downvotes
     await User.findByIdAndUpdate(question.author, {
       $inc: { reputation: hasDownvoted ? -10 : 10 },
     });
