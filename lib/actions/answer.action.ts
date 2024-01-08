@@ -160,12 +160,12 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
       throw new Error("Answer not found");
     }
 
-    // increment user's reputation by +1 for upvoting an answer
+    // increment user's reputation by +1 for downvoting an answer
     await User.findByIdAndUpdate(userId, {
       $inc: { reputation: hasDownvoted ? -1 : 1 },
     });
 
-    // increment author's reputation by +10 for recieving upvotes
+    // increment author's reputation by +10 for recieving downvotes
     await User.findByIdAndUpdate(answer.author, {
       $inc: { reputation: hasDownvoted ? -10 : 10 },
     });
