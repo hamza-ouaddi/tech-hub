@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import { Wand2 } from "lucide-react";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   questionDescription: string;
@@ -54,7 +55,17 @@ const Answer = ({ questionDescription, questionId, authorId }: Props) => {
 
         editor.setContent("");
       }
+
+      return toast({
+        title: "Your answer has been successfully submitted!",
+        description: "Thank you for contributing to the community.",
+      });
     } catch (error) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: `${error}`,
+        variant: "destructive",
+      });
       console.log(error);
       throw error;
     } finally {
@@ -74,6 +85,10 @@ const Answer = ({ questionDescription, questionId, authorId }: Props) => {
           body: JSON.stringify({ questionDescription }),
         }
       );
+
+      toast({
+        title: "AI Answer has been generated successfully!",
+      });
 
       const aiAnswer = await response.json();
 

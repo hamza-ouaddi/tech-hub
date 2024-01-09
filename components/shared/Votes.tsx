@@ -17,6 +17,7 @@ import {
   PiArrowFatDownBold,
   PiArrowFatUpBold,
 } from "react-icons/pi";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   type: string;
@@ -45,7 +46,10 @@ const Votes = ({
   // Vote function
   const handleVote = async (action: string) => {
     if (!userId) {
-      return;
+      return toast({
+        title: "Please log in",
+        description: "You must be logged in to perform this action.",
+      });
     }
 
     if (action === "upvote") {
@@ -66,6 +70,11 @@ const Votes = ({
           path: pathname,
         });
       }
+
+      return toast({
+        title: `Upvote ${hasUpvoted ? "removed." : "successfuly!"}`,
+        variant: hasUpvoted ? "destructive" : "default",
+      });
     }
 
     if (action === "downvote") {
@@ -86,6 +95,10 @@ const Votes = ({
           path: pathname,
         });
       }
+      return toast({
+        title: `Downvote ${hasDownvoted ? "removed." : "successfuly."}`,
+        variant: hasDownvoted ? "destructive" : "default",
+      });
     }
   };
 
@@ -95,6 +108,13 @@ const Votes = ({
       userId: JSON.parse(userId),
       questionId: JSON.parse(typeId),
       path: pathname,
+    });
+
+    return toast({
+      title: `Question is ${
+        hasSaved ? "removed from" : "saved in"
+      } your collection.`,
+      variant: hasSaved ? "destructive" : "default",
     });
   };
 
