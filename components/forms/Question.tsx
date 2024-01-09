@@ -21,6 +21,7 @@ import { XCircle } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   type?: string;
@@ -60,6 +61,9 @@ const Question = ({ type, getUserId, questionDetails }: Props) => {
           path: pathname,
         });
         router.push(`/question/${getQuestionDetails._id}`);
+        toast({
+          title: "Question has been successfully edited.",
+        });
       } else {
         await createQuestion({
           title: values.title,
@@ -69,9 +73,19 @@ const Question = ({ type, getUserId, questionDetails }: Props) => {
           path: pathname,
         });
         router.push("/");
+        toast({
+          title: "Question has been successfully submitted!",
+          description: "Thank you for contributing to the community.",
+        });
       }
     } catch (error) {
-      console.log(values);
+      console.log(error);
+      toast({
+        title: "Oops! Something went wrong.",
+        description: `${error}`,
+        variant: "destructive",
+      });
+      throw error;
     } finally {
       setIsSubmitting(false);
     }
