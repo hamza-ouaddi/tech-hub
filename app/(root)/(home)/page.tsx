@@ -13,6 +13,7 @@ import {
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
+import Loading from "./loading";
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
@@ -39,6 +40,8 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     });
   }
 
+  const isLoading = false;
+  if (isLoading) return <Loading />;
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
