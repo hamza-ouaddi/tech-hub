@@ -13,8 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-// @ts-ignore
-const Page = async ({ params, searchParams }) => {
+const Page = async ({ params, searchParams }: any) => {
   const question = await getQuestionById({ questionId: params.id });
   const { userId: clerkId } = auth();
 
@@ -45,11 +44,11 @@ const Page = async ({ params, searchParams }) => {
           <Votes
             type="question"
             typeId={JSON.stringify(question._id)}
-            userId={JSON.stringify(getUser._id)}
+            userId={JSON.stringify(getUser?._id)}
             upvotes={question.upvotes.length}
-            hasUpvoted={question.upvotes.includes(getUser._id)}
+            hasUpvoted={question.upvotes.includes(getUser?._id)}
             downvotes={question.downvotes.length}
-            hasDownvoted={question.downvotes.includes(getUser._id)}
+            hasDownvoted={question.downvotes.includes(getUser?._id)}
             hasSaved={getUser?.saved.includes(question._id)}
           />
         </div>
@@ -98,7 +97,7 @@ const Page = async ({ params, searchParams }) => {
 
       <AllAnswers
         questionId={question._id}
-        userId={getUser._id}
+        userId={getUser?._id}
         totalAnswers={question.answers.length}
         filter={searchParams?.filter}
       />
@@ -106,7 +105,7 @@ const Page = async ({ params, searchParams }) => {
       <Answer
         questionDescription={question.description}
         questionId={JSON.stringify(question._id)}
-        authorId={JSON.stringify(getUser._id)}
+        authorId={JSON.stringify(getUser?._id)}
       />
     </>
   );

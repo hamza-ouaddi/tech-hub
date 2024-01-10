@@ -47,11 +47,6 @@ export const sidebarLinks: SidebarLink[] = [
     label: "Collections",
   },
   {
-    icon: <Building2 size={22} />,
-    route: "/jobs",
-    label: "Find Jobs",
-  },
-  {
     icon: <Tag size={22} />,
     route: "/tags",
     label: "Tags",
