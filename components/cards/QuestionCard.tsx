@@ -77,36 +77,37 @@ const QuestionCard = ({
           textStyles="body-medium text-dark400_light700"
           isAuthor
         />
+        <div className="flex flex-wrap gap-6">
+          <Metric
+            icon={<ThumbsUp size={16} />}
+            value={formatNumber(upvotes.length)}
+            title="Votes"
+            textStyles="small-medium text-dark400_light800"
+            imgUrl={""}
+            alt={""}
+            isAuthor={false}
+          />
 
-        <Metric
-          icon={<ThumbsUp size={16} />}
-          value={formatNumber(upvotes.length)}
-          title="Votes"
-          textStyles="small-medium text-dark400_light800"
-          imgUrl={""}
-          alt={""}
-          isAuthor={false}
-        />
+          <Metric
+            icon={<MessageCircle size={16} />}
+            value={formatNumber(answers.length)}
+            title="Answers"
+            textStyles="small-medium text-dark400_light800"
+            imgUrl={""}
+            alt={""}
+            isAuthor={false}
+          />
 
-        <Metric
-          icon={<MessageCircle size={16} />}
-          value={formatNumber(answers.length)}
-          title="Answers"
-          textStyles="small-medium text-dark400_light800"
-          imgUrl={""}
-          alt={""}
-          isAuthor={false}
-        />
-
-        <Metric
-          icon={<Eye size={16} />}
-          value={formatNumber(views)}
-          title="Views"
-          textStyles="small-medium text-dark400_light800"
-          imgUrl={""}
-          alt={""}
-          isAuthor={false}
-        />
+          <Metric
+            icon={<Eye size={16} />}
+            value={formatNumber(views)}
+            title="Views"
+            textStyles="small-medium text-dark400_light800"
+            imgUrl={""}
+            alt={""}
+            isAuthor={false}
+          />
+        </div>
       </div>
     </div>
   );
