@@ -1,6 +1,5 @@
 import { SidebarLink } from "@/types";
 import {
-  Building2,
   HelpCircle,
   Home,
   Laptop2,
