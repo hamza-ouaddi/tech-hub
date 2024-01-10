@@ -64,6 +64,13 @@ export interface GetQuestionsParams {
   filter?: string;
 }
 
+export interface GetRecommendedQuestionsParams {
+  userId: string;
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
+}
+
 export interface GetQuestionByIdParams {
   questionId: string;
 }
