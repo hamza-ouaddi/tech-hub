@@ -7,7 +7,12 @@ import { QuestionFilters } from "@/constants/filter";
 import { getSavedQuestions } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Collection | TechHub",
+};
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
