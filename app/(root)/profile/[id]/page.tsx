@@ -12,6 +12,11 @@ import { CalendarDays, Link2, MapPin } from "lucide-react";
 import Stats from "@/components/shared/Stats";
 import TopPostsTab from "@/components/shared/TopPostsTab";
 import AnswersTab from "@/components/shared/AnswersTab";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile | TechHub",
+};
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();

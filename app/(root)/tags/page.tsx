@@ -6,7 +6,12 @@ import LocalSearchBar from "@/components/shared/searchbar/LocalSearchBar";
 import { TagFilters } from "@/constants/filter";
 import { getAllTags } from "@/lib/actions/tag.action";
 import { SearchParamsProps } from "@/types";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Tags | TechHub",
+};
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const allTags = await getAllTags({
